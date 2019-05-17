@@ -11,4 +11,7 @@ deploy:
 dev:
 	cd frontend && npm run dev &
 	cd backend && UI_ROOT=../frontend/static go run main.go types.go sandbox.go
-
+build-sandbox:
+	cd sandbox && docker build -t mtharrison/deno .
+push-sandbox:
+	cd sandbox && docker push mtharrison/deno

@@ -7,5 +7,5 @@ RUN curl -fsSL https://deno.land/x/install/install.sh | sh
 RUN mkdir -p /home/deno && mv /root/.deno/bin/deno /home/deno/deno
 RUN chown -R deno:deno /home/deno
 
-# USER deno
+USER deno
 WORKDIR /home/deno
