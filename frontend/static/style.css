@@ -1,0 +1,26 @@
+
+.header {
+    margin: 10px 0 20px;
+    overflow: hidden;
+}
+
+.header img {
+    float: left;
+}
+
+.header h1 {
+    float: left;
+    margin-top: 35px;
+    font-size: 24px;
+    margin-left: 10px;
+}
+
+.blue-bg {
+    background: rgba(36, 126, 233, 0.1);
+    padding: 15px;
+}
+
+pre {
+    min-height: 400px;
+    white-space: pre-wrap;
+}

@@ -1,0 +1,15 @@
+language: go
+go:
+- 1.12.x
+python:
+- '2.7'
+branches:
+  only:
+  - master
+install:
+- sudo pip install ansible
+script:
+- make build && make provision && make deploy
+before_install:
+- openssl aes-256-cbc -K $encrypted_8e7a3bead23d_key -iv $encrypted_8e7a3bead23d_iv
+  -in deployment/deploy_key.enc -out deploy_key -d && chmod 600 deploy_key

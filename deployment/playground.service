@@ -1,0 +1,13 @@
+[Unit]
+Description=Deno Playground
+
+[Service]
+Environment=PORT=80
+Environment=C=20
+
+Restart=always
+RestartSec=1
+
+WorkingDirectory=/srv
+
+ExecStart=/srv/app

@@ -1,0 +1,30 @@
+---
+-
+  gather_facts: false
+  hosts: all
+  name: "Install Python"
+  tasks:
+    -
+      raw: "export PATH=$PATH:/usr/bin && sudo apt-get update && sudo apt-get -qq install python-minimal"
+-
+  become: true
+  hosts: all
+  name: "Provision Web Nodes"
+  tasks:
+    -
+      apt:
+        name: python-pip
+      name: "Install pip"
+    -
+      apt:
+        name: docker.io
+        update_cache: true
+      name: "Install Docker"
+    -
+      name: "Install Docker Python"
+      pip:
+        name: docker
+    -
+      name: "Install DNS Python"
+      pip:
+        name: dnspython
