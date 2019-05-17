@@ -83,7 +83,14 @@ func (server *Server) executeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (server *Server) addRoutes() {
-	http.Handle("/", http.FileServer(http.Dir("frontend/static")))
+
+	uiRoot := os.Getenv("UI_ROOT")
+	fmt.Println(uiRoot)
+	if uiRoot == "" {
+		uiRoot = "frontend/static"
+	}
+
+	http.Handle("/", http.FileServer(http.Dir(uiRoot)))
 	http.HandleFunc("/execute", server.executeHandler)
 }
 

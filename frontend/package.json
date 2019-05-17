@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "ace-builds": "^1.4.4",
-    "ansi_up": "^4.0.3"
+    "strip-ansi": "^5.2.0"
   },
   "devDependencies": {
     "rollup": "1.12.0",
