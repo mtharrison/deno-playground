@@ -49,7 +49,7 @@ func sandbox(job Job) {
 	securityArgs := []string{
 		"--cap-drop=ALL",
 		"--cap-add=DAC_OVERRIDE",
-		"--net=none",
+		// "--net=none",
 		// "--memory=256m",
 		"--pids-limit=512",
 	}
