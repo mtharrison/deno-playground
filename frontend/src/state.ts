@@ -1,10 +1,17 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 
-import { ApplicationState, Action, ActionType, UpdatedOutputAction } from './types'
+import { Action, LOCK, UNLOCK, UPDATE_OUTPUT } from './actions'
+
+export interface ApplicationState {
+    output: string,
+    code: string,
+    name: string,
+    locked: boolean
+}
 
 const defaultState: ApplicationState = {
-    output: '....',
+    output: '...',
     code: `setInterval(() => {\n    let i = 0;\n\tconsole.log('hello ' + i++);\n}, 1000)`,
     name: 'Deno playground',
     locked: false
@@ -12,15 +19,13 @@ const defaultState: ApplicationState = {
 
 function reducer(state = defaultState, action: Action): ApplicationState {
 
-    console.log(action);
-
     switch (action.type) {
-        case ActionType.Lock:
+        case LOCK:
             return Object.assign({}, state, { locked: true });
-        case ActionType.Unlock:
+        case UNLOCK:
             return Object.assign({}, state, { locked: false });
-        case ActionType.UpdatedOutput:
-            return Object.assign({}, state, { output: (action as UpdatedOutputAction).output });
+        case UPDATE_OUTPUT:
+            return Object.assign({}, state, { output: action.output });
         default:
             return state;
     }

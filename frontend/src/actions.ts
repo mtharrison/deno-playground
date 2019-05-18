@@ -1,29 +1,58 @@
 import { Dispatch } from 'redux';
 import Strip from 'strip-ansi'
 
-import { ActionType } from './types'
+// Action types
 
-export function lock() {
-    return {
-        type: ActionType.Lock
-    };
+export const LOCK = 'LOCK';
+export const UNLOCK = 'UNLOCK';
+export const EXECUTE = 'EXECUTE';
+export const UPDATE_OUTPUT = 'UPDATE_OUTPUT'
+
+// Action interfaces
+
+interface LockAction {
+    type: typeof LOCK
 }
 
-export function unlock() {
-    return {
-        type: ActionType.Unlock
-    };
+interface UnlockAction {
+    type: typeof UNLOCK
 }
 
-export function updatedOutput(output: string) {
+interface ExecuteAction {
+    type: typeof EXECUTE,
+    code: string
+}
+
+interface UpdateOutputAction {
+    type: typeof UPDATE_OUTPUT,
+    output: string
+}
+
+export type Action = LockAction
+    | UnlockAction
+    | ExecuteAction
+    | UpdateOutputAction
+
+// Action creators
+
+export function lock(): Action {
+    return { type: LOCK };
+}
+
+export function unlock(): Action {
+    return { type: UNLOCK };
+}
+
+export function updateOutput(output: string): Action {
     return {
-        type: ActionType.UpdatedOutput,
+        type: UPDATE_OUTPUT,
         output
     };
 }
 
 export const execute = (code: string) => (dispatch: Dispatch) => {
 
+    dispatch({ type: EXECUTE });
     dispatch(lock());
 
     fetch('/execute', {
@@ -42,7 +71,7 @@ export const execute = (code: string) => (dispatch: Dispatch) => {
             var chunk = decoder.decode(result.value || new Uint8Array(0), { stream: !result.done });
             text += chunk;
 
-            dispatch(updatedOutput(Strip(text)));
+            dispatch(updateOutput(Strip(text)));
 
             if (result.done) {
                 dispatch(unlock());

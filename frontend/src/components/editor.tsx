@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Ace from 'ace-builds'
 import { connect } from 'react-redux'
 
-import { ApplicationState } from '../types'
+import { ApplicationState } from '../state'
 import { execute } from '../actions'
 
 interface EditorProps {

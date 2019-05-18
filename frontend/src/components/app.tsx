@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import Editor from './editor'
 import Output from './output'
-import { ApplicationState } from '../types'
+import { ApplicationState } from '../state'
 
 interface AppProps {
     name: string
