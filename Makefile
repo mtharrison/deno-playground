@@ -4,6 +4,7 @@ test:
 	cd backend && go test
 build:
 	cd backend && GOOS=linux go build -o ../out/app
+	cd frontend && npm run build
 provision:
 	$(ANSIBLE_PLAYBOOK) provision.yml
 deploy:

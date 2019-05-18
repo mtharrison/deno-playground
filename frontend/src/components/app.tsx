@@ -21,6 +21,9 @@ const App = (props: AppProps) => {
                 <Editor />
                 <Output />
             </div>
+            <footer>
+                <p>Made with 🖤 by <a href="http://twitter/mt_harrison">@mt_harrison</a></p>
+            </footer>
         </div>
     );
 }

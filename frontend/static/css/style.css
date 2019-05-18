@@ -1,12 +1,26 @@
-html {
+* {
+    box-sizing: border-box;
+}
+
+body, #root, .container {
+    height: 100vh;
     font-family: 'Source Sans Pro', sans-serif;
+}
+
+a {
+    color:black;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
 }
 
 header {
     display: flex;
     align-items: center;
     height: 80px;
-    margin: 10px;
 }
 
 header h1 {
@@ -16,12 +30,23 @@ header h1 {
 
 .main {
     display: flex;
-    margin: 10px;
+    flex: 1;
+    margin-top: 20px;
+}
+
+@media (max-width: 700px) {
+    .main {
+        flex-direction: column;
+    }
+}
+
+.main p {
+    margin-top: 0;
 }
 
 .main > div {
     flex: 1;
-    margin: 10px;
+    margin: 0px 10px 10px;
 }
 
 .blue-bg {
@@ -30,19 +55,46 @@ header h1 {
 }
 
 pre {
-    min-height: 400px;
     white-space: pre-wrap;
+    margin: 0;
 }
 
 .btn {
     color: #fff;
-    background-color: #6c757d;
-    border-color: #6c757d;
+    background-color: black;
+    border-color: black;
     padding: 10px;
     border-radius: 5px;
 }
 
+.editor-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.editor-container button {
+   width: 100px;
+}
+
+#code {
+    flex: 1;
+    margin: 0px 0px 20px;
+}
+
+.output-container {
+    display: flex;
+    flex-direction: column;
+}
+
 #output {
     font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    flex: 1;
+}
+
+footer {
+    margin: 0 10px;
+    display: flex;
+    flex-direction: row-reverse;
     font-size: 14px;
 }
