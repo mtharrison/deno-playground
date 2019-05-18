@@ -12,16 +12,12 @@ interface AppProps {
 const App = (props: AppProps) => {
 
     return (
-        <div className="container-fluid">
-            <div className="row">
-                <div className="col-sm">
-                    <div className="header">
-                        <img width="100px" src="/images/deno.svg" alt={props.name}/>
-                        <h1>{props.name}</h1>
-                    </div>
-                </div>
-            </div>
-            <div className="row">
+        <div className="container">
+            <header>
+                <img width="80px" src="/images/deno.svg" alt={props.name}/>
+                <h1>{props.name}</h1>
+            </header>
+            <div className="main">
                 <Editor />
                 <Output />
             </div>

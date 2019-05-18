@@ -22,10 +22,10 @@ class Editor extends React.Component<EditorProps> {
 
     render() {
         return (
-            <div className="col-sm">
+            <div>
                 <p>Code</p>
                 <pre className="blue-bg" id="code" contentEditable>{this.props.code}</pre>
-                <button onClick={() => this.props.execute(this.props.code)} type="button" className="btn btn-dark btn-lg">{this.props.locked ? '...' : 'Execute'}</button>
+                <button onClick={() => this.props.execute(this.props.code)} type="button" className="btn">{this.props.locked ? '...' : 'Execute'}</button>
             </div>
         );
     }

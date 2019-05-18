@@ -6,7 +6,7 @@ import { ApplicationState } from '../state'
 const Output = (props: any) => {
 
     return (
-        <div className="col-sm">
+        <div>
             <p>Output</p>
             <pre className="blue-bg" id="output">{props.output}</pre>
         </div>

@@ -1,0 +1,48 @@
+html {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    height: 80px;
+    margin: 10px;
+}
+
+header h1 {
+    font-size: 24px;
+    margin-left: 5px;
+}
+
+.main {
+    display: flex;
+    margin: 10px;
+}
+
+.main > div {
+    flex: 1;
+    margin: 10px;
+}
+
+.blue-bg {
+    background: rgba(36, 126, 233, 0.1);
+    padding: 15px;
+}
+
+pre {
+    min-height: 400px;
+    white-space: pre-wrap;
+}
+
+.btn {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#output {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+}
