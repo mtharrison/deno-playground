@@ -11,8 +11,8 @@ export interface ApplicationState {
 }
 
 const defaultState: ApplicationState = {
-    output: '...',
-    code: `setInterval(() => {\n    let i = 0;\n\tconsole.log('hello ' + i++);\n}, 1000)`,
+    output: '// output',
+    code: `console.table(Deno.Core)`,
     name: 'Deno playground',
     locked: false
 };

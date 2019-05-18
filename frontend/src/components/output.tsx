@@ -7,7 +7,6 @@ const Output = (props: any) => {
 
     return (
         <div className="output-container">
-            <p>Output</p>
             <pre className="blue-bg" id="output">{props.output}</pre>
         </div>
     );

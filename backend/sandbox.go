@@ -70,7 +70,7 @@ func sandbox(job Job) {
 	cmd := exec.CommandContext(ctx, "docker", args...)
 
 	cmd.Stdout = &ChannelWriter{channel: job.stdout}
-	cmd.Stderr = &ChannelWriter{channel: job.stderr}
+	// cmd.Stderr = &ChannelWriter{channel: job.stderr}
 
 	cmd.Run()
 	cmd.Wait()
