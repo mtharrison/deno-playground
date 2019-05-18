@@ -1,12 +1,18 @@
 import * as React from 'react';
+import { connect } from 'react-redux'
 
-export default class Output extends React.Component<any> {
-    render() {
-        return (
-            <div className="col-sm">
-                <p>Output</p>
-                <pre className="blue-bg" id="output">{this.props.output}</pre>
-            </div>
-        );
-    }
+import { ApplicationState } from './types'
+
+const Output = (props: any) => {
+
+    return (
+        <div className="col-sm">
+            <p>Output</p>
+            <pre className="blue-bg" id="output">{props.output}</pre>
+        </div>
+    );
 }
+
+const mapStateToProps = (state: ApplicationState) => ({ output: state.output });
+
+export default connect(mapStateToProps)(Output)
