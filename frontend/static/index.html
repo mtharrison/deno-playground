@@ -13,27 +13,7 @@
     <title>Deno Playground</title>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm">
-                <div class="header">
-                    <img width="100px" src="/images/deno.svg" alt="Deno Playground">
-                    <h1>Deno Playground</h1>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <p>Code</p>
-                <pre class="blue-bg" id="code" contenteditable="true">setInterval(() => console.log('hello'), 1000)</pre>
-                <button type="button" id="executeButton" class="btn btn-dark btn-lg">Execute</button>
-            </div>
-            <div class="col-sm">
-                <p>Output</p>
-                <pre class="blue-bg" id="output">...</pre>
-            </div>
-        </div>
-    </div>
+    <div id="root"></div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
