@@ -1,5 +1,4 @@
 node_modules
-bundle.js
 .vscode
 *.retry
 app
