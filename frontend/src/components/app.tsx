@@ -3,9 +3,13 @@ import { connect } from 'react-redux'
 
 import Editor from './editor'
 import Output from './output'
-import { ApplicationState } from './types'
+import { ApplicationState } from '../types'
 
-const App = (props: any) => {
+interface AppProps {
+    name: string
+}
+
+const App = (props: AppProps) => {
 
     return (
         <div className="container-fluid">
@@ -25,8 +29,6 @@ const App = (props: any) => {
     );
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-    name: state.name
-});
+const mapStateToProps = (state: ApplicationState) => ({ name: state.name });
 
 export default connect(mapStateToProps)(App)

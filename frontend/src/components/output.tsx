@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
 
-import { ApplicationState } from './types'
+import { ApplicationState } from '../types'
 
 const Output = (props: any) => {
 

@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import Strip from 'strip-ansi'
 
-import { ApplicationState, Action, ActionType } from './types'
+import { ActionType } from './types'
 
 export function lock() {
     return {
