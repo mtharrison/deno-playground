@@ -2,7 +2,7 @@
 Description=Deno Playground
 
 [Service]
-Environment=PORT=80
+Environment=PORT=8090
 Environment=C=20
 
 Restart=always

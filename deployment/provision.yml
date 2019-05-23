@@ -4,33 +4,44 @@
   hosts: all
   name: "Install Python"
   tasks:
-    -
-      raw: "export PATH=$PATH:/usr/bin && sudo apt-get update && sudo apt-get -qq install python-minimal"
+    - raw: "export PATH=$PATH:/usr/bin && sudo apt-get update && sudo apt-get -qq install python-minimal"
 -
   become: true
   hosts: all
   name: "Provision Web Nodes"
   tasks:
-    -
+    - name: "Install pip"
       apt:
         name: python-pip
-      name: "Install pip"
-    -
+    - name: "Install Docker"
       apt:
         name: docker.io
         update_cache: true
-      name: "Install Docker"
-    -
-      name: "Install Docker Python"
+    - name: "Install Docker Python"
       pip:
         name: docker
-    -
-      name: "Install DNS Python"
+    - name: "Install DNS Python"
       pip:
         name: dnspython
-    -
+    - name: "Install nginx"
       apt:
         name: nginx
         update_cache: true
-      name: "Install nginx"
+    - name: create nginx logs dir
+      file:
+        path: /var/log/nginx
+        state: directory
+    - name: "Copy nginx files to server"
+      copy:
+        src: ./nginx
+        dest: /etc
+        owner: root
+        group: root
+        mode: 0775
+    - name: Add the www user
+      user:
+        name: www
+        comment: Web user
+
+
 

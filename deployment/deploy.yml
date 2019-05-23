@@ -4,39 +4,39 @@
   hosts: all
   name: "Deploy application"
   tasks:
-    -
-      name: Pull Docker Image for Deno
+    - name: Pull Docker Image for Deno
       docker_image:
         name: mtharrison/deno
         tag: latest
         force: true
       register: image
-    -
-      name: Copy systemd service definition
+    - name: Copy systemd service definition
       copy:
         src: ./playground.service
         dest: /etc/systemd/system/playground.service
         owner: root
         group: root
         mode: 0775
-    -
-      name: Copy frontend files to server
+    - name: Copy frontend files to server
       copy:
         src: ../frontend/static
         dest: /srv/frontend
         owner: root
         group: root
         mode: 0775
-    -
-      name: Copy application binary to server
+    - name: Copy application binary to server
       copy:
         src: ../out/app
         dest: /srv/app
         owner: root
         group: root
         mode: 0775
-    -
-      name: Restart service
+    - name: Restart service
       service:
         name: playground
         state: restarted
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
+      become: true
