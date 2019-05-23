@@ -46,19 +46,10 @@ func (server *Server) executeHandler(w http.ResponseWriter, r *http.Request) {
 	var chunk []byte
 	var closed bool
 
-	stdoutStart := true
-
 	for {
 		select {
 		case d, ok := <-stdout:
 			if ok {
-				if stdoutStart {
-					w.Write([]byte("\n"))
-					stdoutStart = false
-					if flusher {
-						f.Flush()
-					}
-				}
 				chunk = d
 			} else {
 				closed = true

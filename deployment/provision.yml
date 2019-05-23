@@ -28,3 +28,9 @@
       name: "Install DNS Python"
       pip:
         name: dnspython
+    -
+      apt:
+        name: nginx
+        update_cache: true
+      name: "Install nginx"
+

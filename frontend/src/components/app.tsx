@@ -32,13 +32,27 @@ const App = (props: AppProps) => {
                     <option value="4">Example 4</option>
                     <option value="5">Example 5</option>
                 </select>
+                <p>Permissions</p>
+                <div className="permissions">
+                    <label htmlFor="allow-read">--allow-read</label>
+                    <input type="checkbox" name="allow-read" id="allow-read"/>
+
+                    <label htmlFor="allow-read">--allow-write</label>
+                    <input type="checkbox" name="allow-read" id="allow-write"/>
+
+                    <label htmlFor="allow-read">--allow-exec</label>
+                    <input type="checkbox" name="allow-exec" id="allow-exec"/>
+
+                    <label htmlFor="allow-read">--allow-net (loopback)</label>
+                    <input type="checkbox" name="allow-exec" id="allow-net"/>
+                </div>
             </div>
             <div className="main">
                 <Editor />
                 <Output />
             </div>
             <footer>
-                <p>Made with 🖤 by <a href="http://twitter/mt_harrison">@mt_harrison</a></p>
+                <p>Made with ♥ by <a href="http://twitter/mt_harrison">@mt_harrison</a></p>
             </footer>
         </div>
     );

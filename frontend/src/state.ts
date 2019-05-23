@@ -12,7 +12,7 @@ export interface ApplicationState {
 
 const defaultState: ApplicationState = {
     output: '// output',
-    code: `console.table(Deno.Core)`,
+    code: `console.table(Deno.metrics())`,
     name: 'Deno playground',
     locked: false
 };
