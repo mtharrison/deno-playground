@@ -23,25 +23,4 @@
     - name: "Install DNS Python"
       pip:
         name: dnspython
-    - name: "Install nginx"
-      apt:
-        name: nginx
-        update_cache: true
-    - name: create nginx logs dir
-      file:
-        path: /var/log/nginx
-        state: directory
-    - name: "Copy nginx files to server"
-      copy:
-        src: ./nginx
-        dest: /etc
-        owner: root
-        group: root
-        mode: 0775
-    - name: Add the www user
-      user:
-        name: www
-        comment: Web user
-
-
 
