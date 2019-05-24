@@ -1,7 +1,0 @@
-[package]
-name = "backend-rs"
-version = "0.1.0"
-authors = ["Matt Harrison <hi@matt-harrison.com>"]
-edition = "2018"
-
-[dependencies]
