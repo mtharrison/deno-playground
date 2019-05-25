@@ -20,11 +20,52 @@ class Editor extends React.Component<EditorProps> {
         this.editor = Ace.edit("code");
         this.editor.setHighlightActiveLine(false);
         this.editor.setShowPrintMargin(false);
+
+        let metaDown = false;
+        let enterDown = false;
+
+        document.getElementById('code').addEventListener('keydown', (e) => {
+
+            if (e.keyCode === 13) {
+                enterDown = true;
+            }
+
+            if (e.keyCode === 93) {
+                metaDown = true;
+            }
+
+            setTimeout(() => {
+
+                enterDown = false;
+                metaDown = false;
+            }, 500)
+
+            if (enterDown &&
+                metaDown) {
+
+
+                this.props.execute(this.editor.getValue());
+            }
+        });
+
+        document.getElementById('code').addEventListener('keyup', (e) => {
+
+            console.log(`${e.keyCode} was up`);
+
+            if (e.keyCode === 13) {
+                enterDown = false;
+            }
+
+            if (e.keyCode === 93) {
+                metaDown = false;
+            }
+
+        });
     }
 
     componentDidUpdate(prevProps: EditorProps) {
         if (prevProps.code != this.props.code) {
-            this.editor.setValue(this.props.code);
+            this.editor.setValue(this.props.code, -1);
         }
     }
 
