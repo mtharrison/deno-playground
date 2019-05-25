@@ -1,21 +1,31 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
 
-class Examples extends React.Component {
+import { ApplicationState } from '../state'
+import { Example, selectExample } from '../actions'
 
-
-    render() {
-        return (
-            <div className="examples-container">
-                <ul>
-                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Example 1</a></li>
-                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Example 2</a></li>
-                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Example 3</a></li>
-                    <li><a href="http://" target="_blank" rel="noopener noreferrer">Example 4</a></li>
-                </ul>
-            </div>
-        );
-    }
+interface ExamplesProps {
+    examples: Array<Example>,
+    selected: number
+    selectExample: () => any
 }
 
-export default connect()(Examples)
+const Examples = (props: ExamplesProps) => {
+
+    return (
+        <div className="examples-container">
+           <label htmlFor="examples">Load Example:</label>
+            <select name="examples" id="examples" value={props.selected} onChange={props.selectExample}>
+                <option value="-1"></option>
+                {props.examples.map((value, index) => {
+                    return <option value={index} key={index}>{value.name}</option>
+                })}
+            </select>
+        </div>
+    );
+}
+
+const mapStateToProps = (state: ApplicationState) => ({ examples: state.examples, selected: state.selectedExample });
+const mapDispatchToProps = { selectExample };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Examples)

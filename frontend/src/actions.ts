@@ -1,14 +1,25 @@
 import { Dispatch } from 'redux';
 import Strip from 'strip-ansi'
 
+import { ApplicationState } from './state'
+
 // Action types
 
 export const LOCK = 'LOCK';
 export const UNLOCK = 'UNLOCK';
 export const EXECUTE = 'EXECUTE';
 export const UPDATE_OUTPUT = 'UPDATE_OUTPUT'
+export const UPDATE_EXAMPLES = 'UPDATE_EXAMPLES'
+export const SELECT_EXAMPLE = 'SELECT_EXAMPLE'
+export const UPDATE_CODE = 'UPDATE_CODE'
 
 // Action interfaces
+
+export interface Example {
+    name: string;
+    file: string;
+    body: string;
+}
 
 interface LockAction {
     type: typeof LOCK
@@ -23,20 +34,42 @@ interface ExecuteAction {
     code: string
 }
 
+interface UpdateCodeAction {
+    type: typeof UPDATE_CODE,
+    code: string
+}
+
 interface UpdateOutputAction {
     type: typeof UPDATE_OUTPUT,
     output: string
+}
+
+interface UpdateExamplesAction {
+    type: typeof UPDATE_EXAMPLES,
+    examples: Array<Example>
+}
+
+interface SelectExampleAction {
+    type: typeof SELECT_EXAMPLE,
+    selected: number
 }
 
 export type Action = LockAction
     | UnlockAction
     | ExecuteAction
     | UpdateOutputAction
+    | UpdateExamplesAction
+    | SelectExampleAction
+    | UpdateCodeAction
 
 // Action creators
 
 export function lock(): Action {
     return { type: LOCK };
+}
+
+export function updateCode(code: string): Action {
+    return { type: UPDATE_CODE, code };
 }
 
 export function unlock(): Action {
@@ -48,6 +81,24 @@ export function updateOutput(output: string): Action {
         type: UPDATE_OUTPUT,
         output
     };
+}
+
+export function updateExamples(examples: Array<Example>): Action {
+    return {
+        type: UPDATE_EXAMPLES,
+        examples
+    };
+}
+
+export const selectExample = (input: any) => (dispatch: Dispatch, getState: () => ApplicationState) => {
+
+    const state = getState();
+    const selected = parseInt(input.target.value);
+
+    dispatch({ type: SELECT_EXAMPLE, selected });
+    if (selected != -1) {
+        dispatch({ type: UPDATE_CODE, code: state.examples[selected].body });
+    }
 }
 
 export const execute = (code: string) => (dispatch: Dispatch) => {

@@ -1,23 +1,31 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 
-import { Action, LOCK, UNLOCK, UPDATE_OUTPUT } from './actions'
+import { Action, Example, LOCK, UNLOCK, UPDATE_OUTPUT, UPDATE_EXAMPLES, SELECT_EXAMPLE, UPDATE_CODE } from './actions'
 
 export interface ApplicationState {
     output: string,
-    code: string,
     name: string,
-    locked: boolean
+    locked: boolean,
+    examples: Array<Example>
+    selectedExample: number,
+    url: string,
+    code: string,
 }
 
 const defaultState: ApplicationState = {
     output: '// output',
-    code: `console.table(Deno.metrics())`,
     name: 'Deno playground',
-    locked: false
+    locked: false,
+    examples: [],
+    selectedExample: -1,
+    url: 'http://deno-play.app',
+    code: ''
 };
 
 function reducer(state = defaultState, action: Action): ApplicationState {
+
+    console.log(action);
 
     switch (action.type) {
         case LOCK:
@@ -26,6 +34,12 @@ function reducer(state = defaultState, action: Action): ApplicationState {
             return Object.assign({}, state, { locked: false });
         case UPDATE_OUTPUT:
             return Object.assign({}, state, { output: action.output });
+        case UPDATE_EXAMPLES:
+            return Object.assign({}, state, { examples: action.examples });
+        case SELECT_EXAMPLE:
+            return Object.assign({}, state, { selectedExample: action.selected });
+        case UPDATE_CODE:
+            return Object.assign({}, state, { code: action.code });
         default:
             return state;
     }

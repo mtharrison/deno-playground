@@ -76,7 +76,6 @@ func (server *Server) executeHandler(w http.ResponseWriter, r *http.Request) {
 func (server *Server) addRoutes() {
 
 	uiRoot := os.Getenv("UI_ROOT")
-	fmt.Println(uiRoot)
 	if uiRoot == "" {
 		uiRoot = "frontend/static"
 	}

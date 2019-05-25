@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Set Interval Timer",
+        "file": "set-interval-timer.ts"
+    },
+    {
+        "name": "Set Timeout Timer",
+        "file": "set-timeout-timer.ts"
+    }
+]
