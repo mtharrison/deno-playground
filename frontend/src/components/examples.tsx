@@ -16,7 +16,7 @@ const Examples = (props: ExamplesProps) => {
         <div className="examples-container">
            <label htmlFor="examples">Load Example:</label>
             <select name="examples" id="examples" value={props.selected} onChange={props.selectExample}>
-                <option value="-1"></option>
+                <option value="-1">Select example:</option>
                 {props.examples.map((value, index) => {
                     return <option value={index} key={index}>{value.name}</option>
                 })}

@@ -8,7 +8,7 @@
         "file": "set-timeout-timer.ts"
     },
     {
-        "name": "Load /etc",
-        "file": "load-etc.ts"
+        "name": "Load /home/deno",
+        "file": "load-home.ts"
     }
 ]
