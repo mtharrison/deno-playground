@@ -21,6 +21,11 @@ class Editor extends React.Component<EditorProps> {
         this.editor.setHighlightActiveLine(false);
         this.editor.setShowPrintMargin(false);
 
+        this.editor.setOptions({
+            fontFamily: 'monospace',
+            fontSize: '14px'
+        });
+
         let metaDown = false;
         let enterDown = false;
 

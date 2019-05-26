@@ -12,6 +12,7 @@ export const UPDATE_OUTPUT = 'UPDATE_OUTPUT'
 export const UPDATE_EXAMPLES = 'UPDATE_EXAMPLES'
 export const SELECT_EXAMPLE = 'SELECT_EXAMPLE'
 export const UPDATE_CODE = 'UPDATE_CODE'
+export const CLEAR_OUTPUT = 'CLEAR_OUTPUT'
 
 // Action interfaces
 
@@ -54,6 +55,10 @@ interface SelectExampleAction {
     selected: number
 }
 
+interface ClearOutputAction {
+    type: typeof CLEAR_OUTPUT
+}
+
 export type Action = LockAction
     | UnlockAction
     | ExecuteAction
@@ -61,11 +66,16 @@ export type Action = LockAction
     | UpdateExamplesAction
     | SelectExampleAction
     | UpdateCodeAction
+    | ClearOutputAction
 
 // Action creators
 
 export function lock(): Action {
     return { type: LOCK };
+}
+
+export function clearOuput(): Action {
+    return { type: CLEAR_OUTPUT };
 }
 
 export function updateCode(code: string): Action {
@@ -105,6 +115,7 @@ export const execute = (code: string) => (dispatch: Dispatch) => {
 
     dispatch({ type: EXECUTE });
     dispatch(lock());
+    dispatch(clearOuput());
 
     fetch('/execute', {
         method: 'POST',

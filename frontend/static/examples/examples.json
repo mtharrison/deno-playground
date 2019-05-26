@@ -6,5 +6,9 @@
     {
         "name": "Set Timeout Timer",
         "file": "set-timeout-timer.ts"
+    },
+    {
+        "name": "Load /etc",
+        "file": "load-etc.ts"
     }
 ]

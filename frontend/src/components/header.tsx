@@ -15,8 +15,7 @@ const Header = (props: HeaderProps) => {
             <a href={props.url}><img width="80px" src="/images/deno.svg" alt={props.name}/></a>
             <a href={props.url}><h1>{props.name}</h1></a>
             <ul>
-                <li><a href="http://" target="_blank" rel="noopener noreferrer">About</a></li>
-                <li><a href="http://" target="_blank" rel="noopener noreferrer">Contribute</a></li>
+                <li><a href="https://github.com/mtharrison/deno-playground" target="_blank" rel="noopener noreferrer">Contribute</a></li>
             </ul>
         </header>
     );

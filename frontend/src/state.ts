@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 
-import { Action, Example, LOCK, UNLOCK, UPDATE_OUTPUT, UPDATE_EXAMPLES, SELECT_EXAMPLE, UPDATE_CODE } from './actions'
+import { Action, Example, LOCK, UNLOCK, UPDATE_OUTPUT, UPDATE_EXAMPLES, SELECT_EXAMPLE, UPDATE_CODE, CLEAR_OUTPUT } from './actions'
 
 export interface ApplicationState {
     output: string,
@@ -40,6 +40,8 @@ function reducer(state = defaultState, action: Action): ApplicationState {
             return Object.assign({}, state, { selectedExample: action.selected });
         case UPDATE_CODE:
             return Object.assign({}, state, { code: action.code });
+        case CLEAR_OUTPUT:
+            return Object.assign({}, state, { output: '// loading...' });
         default:
             return state;
     }
