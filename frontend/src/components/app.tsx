@@ -5,9 +5,14 @@ import Examples from './examples'
 import Editor from './editor'
 import Header from './header'
 import Output from './output'
+import Permissions from './permissions'
 import { ApplicationState } from '../state'
 
-const App = () => {
+interface AppProps {
+    version: string
+}
+
+const App = (props: AppProps) => {
 
     return (
         <div className="container">
@@ -16,6 +21,7 @@ const App = () => {
 
             <div className="toolbar">
                 <Examples />
+                <Permissions />
             </div>
 
             <div className="main">
@@ -24,7 +30,7 @@ const App = () => {
             </div>
 
             <footer>
-                <p>Made with ♥ by <a href="http://twitter/mt_harrison">@mt_harrison</a></p>
+                <p>Made with ♥ by <a href="http://twitter/mt_harrison">@mt_harrison</a> | {props.version}</p>
             </footer>
 
         </div>
@@ -32,9 +38,7 @@ const App = () => {
 }
 
 const mapStateToProps = (state: ApplicationState) => ({
-    name: state.name,
-    examples: state.examples,
-    selected: state.selectedExample
+    version: state.version
 });
 
 export default connect(mapStateToProps)(App)

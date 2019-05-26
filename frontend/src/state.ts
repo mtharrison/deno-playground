@@ -1,7 +1,11 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 
-import { Action, Example, LOCK, UNLOCK, UPDATE_OUTPUT, UPDATE_EXAMPLES, SELECT_EXAMPLE, UPDATE_CODE, CLEAR_OUTPUT } from './actions'
+import { Action, Example, LOCK, UNLOCK, UPDATE_OUTPUT, UPDATE_EXAMPLES, SELECT_EXAMPLE, UPDATE_CODE, CLEAR_OUTPUT, UPDATE_VERSION, TOGGLE_PERMISSION } from './actions'
+
+export interface Permissions {
+    [key: string]: boolean
+}
 
 export interface ApplicationState {
     output: string,
@@ -11,6 +15,8 @@ export interface ApplicationState {
     selectedExample: number,
     url: string,
     code: string,
+    version: string,
+    permissions: Permissions
 }
 
 const defaultState: ApplicationState = {
@@ -20,12 +26,18 @@ const defaultState: ApplicationState = {
     examples: [],
     selectedExample: -1,
     url: 'http://deno-play.app',
-    code: ''
+    code: '',
+    version: 'x.x.x',
+    permissions: {
+        net: false,
+        read: false,
+        write: false,
+        run: false,
+        env: false
+    }
 };
 
 function reducer(state = defaultState, action: Action): ApplicationState {
-
-    console.log(action);
 
     switch (action.type) {
         case LOCK:
@@ -42,6 +54,10 @@ function reducer(state = defaultState, action: Action): ApplicationState {
             return Object.assign({}, state, { code: action.code });
         case CLEAR_OUTPUT:
             return Object.assign({}, state, { output: '// loading...' });
+        case UPDATE_VERSION:
+            return Object.assign({}, state, { version: action.version });
+        case TOGGLE_PERMISSION:
+            return Object.assign({}, state, { permissions: Object.assign({}, state.permissions, { [action.permission]: !state.permissions[action.permission] }) });
         default:
             return state;
     }

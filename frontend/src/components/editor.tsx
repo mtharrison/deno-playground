@@ -26,45 +26,14 @@ class Editor extends React.Component<EditorProps> {
             fontSize: '14px'
         });
 
-        let metaDown = false;
-        let enterDown = false;
+        document.getElementById('root')
+            .addEventListener('keydown', (e) => {
 
-        document.getElementById('code').addEventListener('keydown', (e) => {
-
-            if (e.keyCode === 13) {
-                enterDown = true;
-            }
-
-            if (e.keyCode === 93) {
-                metaDown = true;
-            }
-
-            setTimeout(() => {
-
-                enterDown = false;
-                metaDown = false;
-            }, 500)
-
-            if (enterDown &&
-                metaDown) {
-
+            if (e.keyCode === 13 &&
+                (e.metaKey === true || e.ctrlKey === true)) {
 
                 this.props.execute(this.editor.getValue());
             }
-        });
-
-        document.getElementById('code').addEventListener('keyup', (e) => {
-
-            console.log(`${e.keyCode} was up`);
-
-            if (e.keyCode === 13) {
-                enterDown = false;
-            }
-
-            if (e.keyCode === 93) {
-                metaDown = false;
-            }
-
         });
     }
 

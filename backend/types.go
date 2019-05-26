@@ -26,3 +26,16 @@ func (w *ChannelWriter) Write(d []byte) (int, error) {
 	w.channel <- d
 	return len(d), nil
 }
+
+type Permissions struct {
+	Net   bool
+	Read  bool
+	Write bool
+	Run   bool
+	Env   bool
+}
+
+type ExecutePayload struct {
+	Code        string
+	Permissions Permissions
+}

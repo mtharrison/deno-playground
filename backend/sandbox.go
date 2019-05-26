@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"io"
 	"io/ioutil"
 	"log"
@@ -28,7 +29,11 @@ func sandbox(job Job) {
 		return
 	}
 
-	_, err = io.Copy(file, job.req.Body)
+	payload := ExecutePayload{}
+	d := json.NewDecoder(job.req.Body)
+	d.Decode(&payload)
+
+	_, err = io.WriteString(file, payload.Code)
 	if err != nil {
 		log.Printf("Error occured writing temp file: %s", err)
 		job.stdout <- nil
@@ -49,17 +54,31 @@ func sandbox(job Job) {
 	securityArgs := []string{
 		"--cap-drop=ALL",
 		"--cap-add=DAC_OVERRIDE",
-		// "--net=none",
-		// "--memory=256m",
+		"--net=none",
+		"--memory=256m",
 		"--pids-limit=512",
 	}
 
-	permissionsArgs := []string{
-		"--allow-net",
-		"--allow-read",
-		"--allow-write",
-		"--allow-run",
-		"--allow-env",
+	permissionsArgs := []string{}
+
+	if payload.Permissions.Net {
+		permissionsArgs = append(permissionsArgs, "--allow-net")
+	}
+
+	if payload.Permissions.Read {
+		permissionsArgs = append(permissionsArgs, "--allow-read")
+	}
+
+	if payload.Permissions.Write {
+		permissionsArgs = append(permissionsArgs, "--allow-write")
+	}
+
+	if payload.Permissions.Run {
+		permissionsArgs = append(permissionsArgs, "--allow-run")
+	}
+
+	if payload.Permissions.Env {
+		permissionsArgs = append(permissionsArgs, "--allow-env")
 	}
 
 	args = append(args, securityArgs...)
@@ -70,10 +89,12 @@ func sandbox(job Job) {
 	cmd := exec.CommandContext(ctx, "docker", args...)
 
 	cmd.Stdout = &ChannelWriter{channel: job.stdout}
-	// cmd.Stderr = &ChannelWriter{channel: job.stderr}
+	cmd.Stderr = &ChannelWriter{channel: job.stderr}
 
-	cmd.Run()
-	cmd.Wait()
+	err = cmd.Run()
+	if err != nil {
+		job.stderr <- []byte(err.Error())
+	}
 
 	close(job.stdout)
 	close(job.stderr)

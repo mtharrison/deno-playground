@@ -23,6 +23,10 @@ header {
     height: 80px;
 }
 
+header > a {
+    text-decoration: none;
+}
+
 header h1 {
     font-size: 24px;
     margin-left: 5px;
@@ -40,6 +44,7 @@ header li {
 
 .toolbar {
     margin: 20px 10px 5px;
+    display: flex;
 }
 
 .toolbar label {
@@ -119,5 +124,19 @@ footer {
     margin: 0 10px;
     display: flex;
     flex-direction: row-reverse;
+    font-size: 14px;
+}
+
+.toolbar ul {
+    margin: 3px 20px;
+    padding: 0;
+    margin-left: auto;
+}
+
+.toolbar ul li {
+    list-style-type: none;
+    float: left;
+    margin-right: 10px;
+    font-family: monospace;
     font-size: 14px;
 }

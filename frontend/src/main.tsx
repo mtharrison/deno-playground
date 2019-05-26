@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 
 import App from './components/app'
 import { store } from './state'
-import { updateExamples, Example } from './actions'
+import { updateExamples, updateVersion, Example } from './actions'
 
 // Bootstrap the application
 
@@ -38,3 +38,14 @@ const loadExamples = async () => {
 };
 
 loadExamples();
+
+// Load version
+
+const loadVersion = async () => {
+
+    const res = await fetch('/version.txt');
+    const text = await res.text();
+    store.dispatch(updateVersion(text.trim()));
+};
+
+loadVersion();

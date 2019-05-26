@@ -13,6 +13,8 @@ export const UPDATE_EXAMPLES = 'UPDATE_EXAMPLES'
 export const SELECT_EXAMPLE = 'SELECT_EXAMPLE'
 export const UPDATE_CODE = 'UPDATE_CODE'
 export const CLEAR_OUTPUT = 'CLEAR_OUTPUT'
+export const UPDATE_VERSION = 'UPDATE_VERSION'
+export const TOGGLE_PERMISSION = 'TOGGLE_PERMISSION'
 
 // Action interfaces
 
@@ -59,6 +61,16 @@ interface ClearOutputAction {
     type: typeof CLEAR_OUTPUT
 }
 
+interface UpdateVersionAction {
+    type: typeof UPDATE_VERSION
+    version: string
+}
+
+interface TogglePermissionAction {
+    type: typeof TOGGLE_PERMISSION
+    permission: string
+}
+
 export type Action = LockAction
     | UnlockAction
     | ExecuteAction
@@ -67,6 +79,8 @@ export type Action = LockAction
     | SelectExampleAction
     | UpdateCodeAction
     | ClearOutputAction
+    | UpdateVersionAction
+    | TogglePermissionAction
 
 // Action creators
 
@@ -111,7 +125,22 @@ export const selectExample = (input: any) => (dispatch: Dispatch, getState: () =
     }
 }
 
-export const execute = (code: string) => (dispatch: Dispatch) => {
+
+export function updateVersion(version: string): Action {
+    return {
+        type: UPDATE_VERSION,
+        version
+    };
+}
+
+export function togglePermission(permission: string) {
+    return {
+        type: TOGGLE_PERMISSION,
+        permission
+    };
+}
+
+export const execute = (code: string) => (dispatch: Dispatch, getState: () => any) => {
 
     dispatch({ type: EXECUTE });
     dispatch(lock());
@@ -119,7 +148,10 @@ export const execute = (code: string) => (dispatch: Dispatch) => {
 
     fetch('/execute', {
         method: 'POST',
-        body: code
+        body: JSON.stringify({
+            code,
+            permissions: getState().permissions
+        })
     })
     .then((response) => {
 
