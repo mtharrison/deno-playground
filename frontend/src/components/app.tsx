@@ -30,7 +30,7 @@ const App = (props: AppProps) => {
             </div>
 
             <footer>
-                <p>Made with ♥ by <a href="http://twitter/mt_harrison">@mt_harrison</a> | {props.version}</p>
+                <p>Made with ♥ by <a href="https://twitter.com/mt_harrison">@mt_harrison</a> | {props.version}</p>
             </footer>
 
         </div>
