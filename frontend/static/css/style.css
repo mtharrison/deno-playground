@@ -1,3 +1,14 @@
+:root {
+    --text-color: #444;
+    --background-color: #f0f0f0;
+    --link-color: #106ad5;
+    --table-border: #bbb;
+    --pre-color: #161616;
+    --pre-link-color: #001631;
+    --pre-background: rgba(36, 126, 233, 0.1);
+    --code-color: #333;
+  }
+
 * {
     box-sizing: border-box;
 }
@@ -5,10 +16,12 @@
 body, #root, .container {
     height: 100vh;
     font-family: 'Source Sans Pro', sans-serif;
+    background: var(--background-color);
+    color: var(--text-color);
 }
 
 a {
-    color:black;
+    color: var(--text-color);
 }
 
 .container {
