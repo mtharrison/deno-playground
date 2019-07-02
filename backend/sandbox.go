@@ -88,8 +88,8 @@ func sandbox(job Job) {
 
 	cmd := exec.CommandContext(ctx, "docker", args...)
 
-	cmd.Stdout = &ChannelWriter{channel: job.stdout}
-	cmd.Stderr = &ChannelWriter{channel: job.stderr}
+	cmd.Stdout = &LimitChannelWriter{channel: job.stdout, limit: 1e6}
+	cmd.Stderr = &LimitChannelWriter{channel: job.stderr, limit: 1e6}
 
 	err = cmd.Run()
 	if err != nil {

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"net/http"
 )
 
@@ -17,14 +18,21 @@ type Job struct {
 	stderr chan []byte
 }
 
-// ChannelWriter implements io.Writer, writing all bytes to a chan []byte
-type ChannelWriter struct {
+// LimitChannelWriter implements io.Writer, writing all bytes to a chan []byte
+type LimitChannelWriter struct {
 	channel chan []byte
+	limit   int
+	written int
 }
 
-func (w *ChannelWriter) Write(d []byte) (int, error) {
+func (w *LimitChannelWriter) Write(d []byte) (int, error) {
+	n := len(d)
+	if w.written+n > w.limit {
+		return 0, errors.New("Reached write limit")
+	}
 	w.channel <- d
-	return len(d), nil
+	w.written += n
+	return n, nil
 }
 
 type Permissions struct {
