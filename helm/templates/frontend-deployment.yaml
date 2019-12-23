@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deno-playground-frontend
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      securityContext:
+        fsGroup: 1000
+      initContainers:
+      - name: pull-images
+        image: docker
+        command: ["/bin/sh"]
+        args: ["-c", "docker pull docker.io/mtharrison/deno-playground-sandbox"]
+        volumeMounts:
+        - name: dockersock
+          mountPath: "/var/run/docker.sock"
+      containers:
+      - name: deno-playground-frontend
+        image: mtharrison/deno-playground-frontend:{{ .Values.versions.frontend }}
+        ports:
+        - name: http
+          containerPort: 8090
+        env:
+        - name: UI_ROOT
+          value: static
+        volumeMounts:
+        - name: dockersock
+          mountPath: "/var/run/docker.sock"
+        - name: code
+          mountPath: "/data/code"
+      volumes:
+      - name: dockersock
+        hostPath:
+          path: "/var/run/docker.sock"
+      - name: code
+        hostPath:
+          path: /data/code
+          type: DirectoryOrCreate

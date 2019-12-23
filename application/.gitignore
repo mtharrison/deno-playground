@@ -1,0 +1,8 @@
+node_modules
+.vscode
+*.retry
+app
+out
+typings
+.vagrant
+static
