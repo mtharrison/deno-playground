@@ -13,7 +13,8 @@ export const UPDATE_EXAMPLES = 'UPDATE_EXAMPLES'
 export const SELECT_EXAMPLE = 'SELECT_EXAMPLE'
 export const UPDATE_CODE = 'UPDATE_CODE'
 export const CLEAR_OUTPUT = 'CLEAR_OUTPUT'
-export const UPDATE_VERSION = 'UPDATE_VERSION'
+export const UPDATE_VERSIONS = 'UPDATE_VERSIONS'
+export const SELECT_VERSION = 'SELECT_VERSION'
 export const TOGGLE_PERMISSION = 'TOGGLE_PERMISSION'
 
 // Action interfaces
@@ -62,8 +63,13 @@ interface ClearOutputAction {
 }
 
 interface UpdateVersionAction {
-    type: typeof UPDATE_VERSION
-    version: string
+    type: typeof UPDATE_VERSIONS
+    versions: Array<string>
+}
+
+interface SelectVersionAction {
+    type: typeof SELECT_VERSION
+    version: number
 }
 
 interface TogglePermissionAction {
@@ -80,6 +86,7 @@ export type Action = LockAction
     | UpdateCodeAction
     | ClearOutputAction
     | UpdateVersionAction
+    | SelectVersionAction
     | TogglePermissionAction
 
 // Action creators
@@ -125,11 +132,17 @@ export const selectExample = (input: any) => (dispatch: Dispatch, getState: () =
     }
 }
 
+export const selectVersion = (input: any) => (dispatch: Dispatch, getState: () => ApplicationState) => {
 
-export function updateVersion(version: string): Action {
+    const version = parseInt(input.target.value);
+    console.log(version);
+    dispatch({ type: SELECT_VERSION, version });
+}
+
+export function updateVersions(versions: Array<string>): Action {
     return {
-        type: UPDATE_VERSION,
-        version
+        type: UPDATE_VERSIONS,
+        versions
     };
 }
 
@@ -146,7 +159,9 @@ export const execute = (code: string) => (dispatch: Dispatch, getState: () => an
     dispatch(lock());
     dispatch(clearOuput());
 
-    fetch('/execute', {
+    const state = getState();
+
+    fetch(`/execute?version=${state.versions[state.version]}`, {
         method: 'POST',
         body: JSON.stringify({
             code,

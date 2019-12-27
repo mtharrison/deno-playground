@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 
-import { Action, Example, LOCK, UNLOCK, UPDATE_OUTPUT, UPDATE_EXAMPLES, SELECT_EXAMPLE, UPDATE_CODE, CLEAR_OUTPUT, UPDATE_VERSION, TOGGLE_PERMISSION } from './actions'
+import { Action, Example, LOCK, UNLOCK, UPDATE_OUTPUT, UPDATE_EXAMPLES, SELECT_EXAMPLE, UPDATE_CODE, CLEAR_OUTPUT, UPDATE_VERSIONS, TOGGLE_PERMISSION, SELECT_VERSION } from './actions'
 
 export interface Permissions {
     [key: string]: boolean
@@ -15,8 +15,9 @@ export interface ApplicationState {
     selectedExample: number,
     url: string,
     code: string,
-    version: string,
-    permissions: Permissions
+    version: number,
+    permissions: Permissions,
+    versions: Array<string>
 }
 
 const defaultState: ApplicationState = {
@@ -27,14 +28,15 @@ const defaultState: ApplicationState = {
     selectedExample: -1,
     url: 'http://deno-play.app',
     code: '',
-    version: 'x.x.x',
+    version: 0,
     permissions: {
         net: false,
         read: false,
         write: false,
         run: false,
         env: false
-    }
+    },
+    versions: []
 };
 
 function reducer(state = defaultState, action: Action): ApplicationState {
@@ -54,10 +56,12 @@ function reducer(state = defaultState, action: Action): ApplicationState {
             return Object.assign({}, state, { code: action.code });
         case CLEAR_OUTPUT:
             return Object.assign({}, state, { output: '// loading...' });
-        case UPDATE_VERSION:
-            return Object.assign({}, state, { version: action.version });
+        case UPDATE_VERSIONS:
+            return Object.assign({}, state, { versions: action.versions });
         case TOGGLE_PERMISSION:
             return Object.assign({}, state, { permissions: Object.assign({}, state.permissions, { [action.permission]: !state.permissions[action.permission] }) });
+        case SELECT_VERSION:
+            return Object.assign({}, state, { version: action.version });
         default:
             return state;
     }

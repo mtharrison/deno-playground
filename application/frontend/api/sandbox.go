@@ -16,7 +16,15 @@ import (
 )
 
 func sandbox(job Job) {
-	file, err := ioutil.TempFile("/data/code", "*.ts")
+
+	tmpDir := os.Getenv("DENO_TMPDIR")
+
+	if tmpDir == "" {
+		tmpDir = "/tmp"
+	}
+
+	file, err := ioutil.TempFile(tmpDir, "*.ts")
+
 	if err != nil {
 		log.Printf("Error occured creating temp file: %s", err)
 		job.stdout <- nil
@@ -49,7 +57,7 @@ func sandbox(job Job) {
 		log.Printf("Error occured creating docker client: %s", err)
 	}
 
-	image := "docker.io/mtharrison/deno-playground-sandbox"
+	image := "docker.io/mtharrison/deno-playground-sandbox" + ":" + job.version
 
 	reader, err := client.ImagePull(ctx, image, types.ImagePullOptions{})
 	if err != nil {

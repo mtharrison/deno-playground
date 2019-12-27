@@ -5,11 +5,12 @@ import Examples from './examples'
 import Editor from './editor'
 import Header from './header'
 import Output from './output'
+import Versions from './versions'
 import Permissions from './permissions'
 import { ApplicationState } from '../state'
 
 interface AppProps {
-    version: string
+    version: number
 }
 
 const App = (props: AppProps) => {
@@ -21,6 +22,7 @@ const App = (props: AppProps) => {
 
             <div className="toolbar">
                 <Examples />
+                <Versions />
                 <Permissions />
             </div>
 
@@ -30,7 +32,7 @@ const App = (props: AppProps) => {
             </div>
 
             <footer>
-                <p>Made with ♥ by <a href="https://twitter.com/mt_harrison">@mt_harrison</a> | {props.version}</p>
+                <p>Made with ♥ by <a href="https://twitter.com/mt_harrison">@mt_harrison</a></p>
             </footer>
 
         </div>

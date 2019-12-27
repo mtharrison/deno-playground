@@ -18,7 +18,7 @@ spec:
       - name: pull-images
         image: docker
         command: ["/bin/sh"]
-        args: ["-c", "docker pull docker.io/mtharrison/deno-playground-sandbox"]
+        args: ["-c", "docker pull --all-tags docker.io/mtharrison/deno-playground-sandbox"]
         volumeMounts:
         - name: dockersock
           mountPath: "/var/run/docker.sock"
@@ -31,6 +31,10 @@ spec:
         env:
         - name: UI_ROOT
           value: static
+        - name: DENO_TMPDIR
+          value: "/data/code"
+        - name: DENO_VERSIONS
+          value: {{ .Values.deno_versions | join "," }}
         volumeMounts:
         - name: dockersock
           mountPath: "/var/run/docker.sock"

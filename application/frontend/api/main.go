@@ -1,11 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -28,13 +30,17 @@ func main() {
 }
 
 func (server *Server) executeHandler(w http.ResponseWriter, r *http.Request) {
+
+	version := r.FormValue("version")
+
 	f, flusher := w.(http.Flusher)
 
 	stdout := make(chan []byte)
 
 	server.queue <- Job{
-		req:    r,
-		stdout: stdout,
+		req:     r,
+		stdout:  stdout,
+		version: version,
 	}
 
 	hostname, err := os.Hostname()
@@ -47,20 +53,10 @@ func (server *Server) executeHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "text/plain")
 	w.Header().Set("x-pod-hostname", hostname)
 
-	var chunk []byte
-	var closed bool
-
 	for {
-		select {
-		case d, ok := <-stdout:
-			if ok {
-				chunk = d
-			} else {
-				closed = true
-			}
-		}
+		chunk, ok := <-stdout
 
-		if closed {
+		if !ok {
 			break
 		}
 
@@ -71,6 +67,21 @@ func (server *Server) executeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (server *Server) versions(w http.ResponseWriter, r *http.Request) {
+	versionString := os.Getenv("DENO_VERSIONS")
+	versions := strings.Split(versionString, ",")
+
+	data, err := json.Marshal(versions)
+
+	if err != nil {
+		log.Printf("Error marshalling: %s", err)
+	}
+
+	w.Header().Set("content-type", "application/json")
+
+	w.Write(data)
+}
+
 func (server *Server) addRoutes() {
 	uiRoot := os.Getenv("UI_ROOT")
 	if uiRoot == "" {
@@ -79,6 +90,7 @@ func (server *Server) addRoutes() {
 
 	http.Handle("/", http.FileServer(http.Dir(uiRoot)))
 	http.HandleFunc("/execute", server.executeHandler)
+	http.HandleFunc("/versions", server.versions)
 }
 
 func (server *Server) listen() {

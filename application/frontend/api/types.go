@@ -13,8 +13,9 @@ type Server struct {
 
 // Job represents an API request packaged with a response channel
 type Job struct {
-	req    *http.Request
-	stdout chan []byte
+	req     *http.Request
+	stdout  chan []byte
+	version string
 }
 
 // LimitChannelWriter implements io.Writer, writing all bytes to a chan []byte
