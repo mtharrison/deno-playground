@@ -65,6 +65,8 @@ func (server *Server) executeHandler(w http.ResponseWriter, r *http.Request) {
 			f.Flush()
 		}
 	}
+
+	w.Write([]byte("\nFinished Executing"))
 }
 
 func (server *Server) versions(w http.ResponseWriter, r *http.Request) {

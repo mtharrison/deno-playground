@@ -3,5 +3,5 @@ env: prod
 replicaCount: 4
 
 versions:
-  frontend: v1.0.6
+  frontend: v1.0.7
 
